@@ -1,8 +1,23 @@
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+let aiInstance: GoogleGenAI | null = null;
+
+function getAI() {
+  if (!aiInstance) {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      console.warn("GEMINI_API_KEY is missing. AI features will be disabled.");
+      return null;
+    }
+    aiInstance = new GoogleGenAI({ apiKey });
+  }
+  return aiInstance;
+}
 
 export async function getTravelAdvice(userQuery: string, currentDeals: any[]) {
+  const ai = getAI();
+  if (!ai) return "抱歉，AI 助手暂时不可用（未配置 API Key）。";
+
   try {
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
