@@ -1,0 +1,5 @@
+{
+  "name": "FlyCheap - 特价机票发现平台",
+  "description": "一个聚合各大OTA和航司特价机票的发现平台，结合AI技术为您推荐最高性价比的飞行方案。",
+  "requestFramePermissions": []
+}
